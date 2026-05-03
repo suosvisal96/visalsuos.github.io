@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visal Suos — Senior Business Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0b0a08; --surface: #131109; --surface2: #1a1710;
+      --border: #252118; --gold: #c9a84c; --gold-dim: #7a6330;
+      --gold-light: #e8c96e; --cream: #ede5d3; --muted: #6b6250; --accent: #c04a2e;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--cream); font-family: 'DM Mono', monospace; font-size: 13.5px; line-height: 1.65; overflow-x: hidden; }
+    body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"); pointer-events: none; z-index: 999; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 1.4rem 5rem; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(to bottom, rgba(11,10,8,0.97) 0%, transparent 100%); transition: border-color 0.3s, background 0.3s; border-bottom: 1px solid transparent; }
+    nav.scrolled { border-color: var(--border); background: rgba(11,10,8,0.97); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.15rem; color: var(--gold); text-decoration: none; letter-spacing: 0.04em; }
+    .nav-links { display: flex; gap: 2.5rem; align-items: center; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--cream); }
+    .nav-cta { padding: 0.5rem 1.4rem !important; border: 1px solid var(--gold-dim) !important; color: var(--gold) !important; }
+    .nav-cta:hover { background: var(--gold-dim) !important; }
+
+    .hero { min-height: 100vh; padding: 0 5rem; display: grid; grid-template-columns: 1.1fr 0.9fr; align-items: center; gap: 4rem; border-bottom: 1px solid var(--border); position: relative; }
+    .hero-divider { position: absolute; left: 50%; top: 10%; bottom: 10%; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold-dim) 40%, var(--gold-dim) 60%, transparent); opacity: 0.4; }
+    .hero-eyebrow { font-size: 10.5px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.8rem; opacity: 0; animation: fadeUp 0.8s 0.1s forwards; display: flex; align-items: center; gap: 0.8rem; }
+    .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
+    h1 { font-family: 'Playfair Display', serif; font-size: clamp(3.2rem, 5.5vw, 6rem); font-weight: 900; line-height: 1.0; letter-spacing: -0.025em; opacity: 0; animation: fadeUp 0.8s 0.25s forwards; }
+    h1 em { font-style: italic; color: var(--gold); }
+    .hero-tagline { margin-top: 1.8rem; font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 300; color: var(--muted); max-width: 480px; line-height: 1.8; opacity: 0; animation: fadeUp 0.8s 0.4s forwards; }
+    .hero-tags { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; opacity: 0; animation: fadeUp 0.8s 0.55s forwards; }
+    .tag { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.35rem 0.9rem; border: 1px solid var(--border); color: var(--muted); background: var(--surface); }
+    .hero-cta { margin-top: 2.8rem; display: flex; gap: 1rem; opacity: 0; animation: fadeUp 0.8s 0.7s forwards; }
+    .btn { display: inline-block; padding: 0.8rem 2.2rem; text-decoration: none; font-family: 'DM Mono', monospace; font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; transition: all 0.25s; }
+    .btn-primary { background: var(--gold); color: var(--bg); }
+    .btn-primary:hover { background: var(--gold-light); }
+    .btn-ghost { border: 1px solid var(--border); color: var(--muted); }
+    .btn-ghost:hover { border-color: var(--gold-dim); color: var(--gold); }
+    .hero-right { opacity: 0; animation: fadeIn 1s 0.5s forwards; padding-left: 2rem; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); padding: 2rem; transition: border-color 0.3s, background 0.3s; }
+    .stat-card:hover { border-color: var(--gold-dim); background: var(--surface2); }
+    .stat-num { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 700; color: var(--gold); display: block; line-height: 1; }
+    .stat-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-top: 0.5rem; display: block; }
+    .location-bar { margin-top: 2px; background: var(--surface); border: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; gap: 0.8rem; font-size: 10.5px; letter-spacing: 0.1em; color: var(--muted); }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); animation: pulse 2s infinite; }
+
+    section { padding: 8rem 5rem; border-bottom: 1px solid var(--border); }
+    .sec-header { display: flex; align-items: baseline; gap: 1.4rem; margin-bottom: 5rem; }
+    .sec-num { font-size: 10.5px; color: var(--gold-dim); letter-spacing: 0.12em; }
+    h2 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 3.5vw, 3.2rem); font-weight: 700; color: var(--cream); }
+
+    .about-grid { display: grid; grid-template-columns: 5fr 3fr; gap: 7rem; align-items: start; }
+    .about-body { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 300; line-height: 1.85; color: var(--cream); }
+    .about-body strong { color: var(--gold); font-weight: 600; }
+    .about-body p + p { margin-top: 1.3rem; }
+    .skills-col h3 { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 1.5rem; }
+    .skills-list { list-style: none; }
+    .skills-list li { padding: 0.7rem 0; border-bottom: 1px solid var(--border); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); display: flex; align-items: center; gap: 0.7rem; transition: color 0.3s; }
+    .skills-list li:hover { color: var(--cream); }
+    .skills-list li::before { content: '▸'; color: var(--gold); font-size: 9px; }
+
+    .exp-items { display: flex; flex-direction: column; gap: 2px; }
+    .exp-card { background: var(--surface); border: 1px solid var(--border); padding: 3rem 3.5rem; display: grid; grid-template-columns: 1fr auto; gap: 3rem; transition: border-color 0.3s, background 0.3s; }
+    .exp-card:hover { border-color: var(--gold-dim); background: var(--surface2); }
+    .exp-company { font-size: 10.5px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+    .exp-role { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--cream); margin-bottom: 1.4rem; }
+    .exp-highlights { list-style: none; }
+    .exp-highlights li { padding: 0.55rem 0; border-bottom: 1px solid var(--border); font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 300; color: var(--muted); display: flex; gap: 0.8rem; transition: color 0.3s; }
+    .exp-highlights li:last-child { border-bottom: none; }
+    .exp-highlights li::before { content: '—'; color: var(--gold-dim); flex-shrink: 0; }
+    .exp-highlights li:hover { color: var(--cream); }
+    .exp-period { font-size: 10.5px; color: var(--muted); letter-spacing: 0.1em; white-space: nowrap; text-align: right; }
+    .exp-badge { display: inline-block; margin-top: 0.6rem; padding: 0.3rem 0.7rem; border: 1px solid var(--border); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-dim); }
+    .exp-sub-title { font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 0.7rem; margin-top: 1.8rem; }
+
+    .portfolio-intro { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300; color: var(--muted); margin-bottom: 3rem; max-width: 600px; }
+    .portfolio-tabs { display: flex; gap: 0; margin-bottom: 3rem; border-bottom: 1px solid var(--border); }
+    .ptab { padding: 0.8rem 2rem; font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.25s; margin-bottom: -1px; }
+    .ptab.active { color: var(--gold); border-bottom-color: var(--gold); }
+    .ptab:hover:not(.active) { color: var(--cream); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .portfolio-grid { display: flex; flex-direction: column; gap: 2px; }
+    .portfolio-row { background: var(--surface); border: 1px solid var(--border); padding: 1.1rem 2rem; display: grid; grid-template-columns: 80px 1fr 100px; gap: 2rem; align-items: center; transition: border-color 0.3s; }
+    .portfolio-row:hover { border-color: var(--gold-dim); }
+    .p-date { font-size: 10px; letter-spacing: 0.08em; color: var(--gold-dim); }
+    .p-name { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--cream); }
+    .p-badge { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.25rem 0.6rem; border: 1px solid; text-align: center; }
+    .p-badge.smartnas { color: #4a9eff; border-color: #1a3a5c; background: #0a1e32; }
+    .p-badge.website  { color: #6fcf97; border-color: #1a3d28; background: #091f14; }
+    .p-badge.fsr      { color: #f2c94c; border-color: #4d3e16; background: #261f0a; }
+    .p-badge.cr       { color: #eb5757; border-color: #4d1f1f; background: #260f0f; }
+
+    .ai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .ai-card { background: var(--surface); border: 1px solid var(--border); padding: 2.2rem 2.4rem; transition: border-color 0.3s, background 0.3s; position: relative; overflow: hidden; }
+    .ai-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--gold-dim), transparent); transform: scaleX(0); transform-origin: left; transition: transform 0.35s; }
+    .ai-card:hover::after { transform: scaleX(1); }
+    .ai-card:hover { border-color: var(--gold-dim); background: var(--surface2); }
+    .ai-icon { font-size: 1.5rem; margin-bottom: 1rem; }
+    .ai-name { font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.8rem; }
+    .ai-desc { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 300; color: var(--muted); line-height: 1.7; }
+
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8rem; align-items: start; }
+    .contact-heading { font-family: 'Playfair Display', serif; font-size: clamp(2.5rem, 4vw, 4.5rem); font-weight: 900; line-height: 1.05; margin-bottom: 1.5rem; }
+    .contact-heading em { color: var(--gold); font-style: italic; }
+    .contact-sub { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 300; color: var(--muted); line-height: 1.8; }
+    .contact-links { display: flex; flex-direction: column; }
+    .contact-link { display: flex; align-items: center; justify-content: space-between; padding: 1.4rem 0; border-bottom: 1px solid var(--border); text-decoration: none; color: var(--muted); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; transition: color 0.3s; }
+    .contact-link:hover { color: var(--gold); }
+    .contact-link-label { display: flex; align-items: center; gap: 0.8rem; }
+    .contact-link-label span { color: var(--gold-dim); font-size: 9.5px; }
+    .contact-arrow { color: var(--gold-dim); transition: transform 0.3s; }
+    .contact-link:hover .contact-arrow { transform: translate(4px, -4px); color: var(--gold); }
+
+    footer { padding: 2rem 5rem; display: flex; justify-content: space-between; align-items: center; }
+    .footer-copy { font-size: 10.5px; color: var(--muted); letter-spacing: 0.1em; }
+    .footer-quote { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 1rem; color: var(--gold-dim); }
+
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.8); } }
+
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 960px) {
+      nav { padding: 1.4rem 2rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 2rem 4rem; }
+      .hero-divider { display: none; }
+      .hero-right { padding-left: 0; }
+      section { padding: 5rem 2rem; }
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .ai-grid { grid-template-columns: 1fr; }
+      .exp-card { grid-template-columns: 1fr; gap: 1rem; }
+      .portfolio-row { grid-template-columns: 70px 1fr 80px; }
+      footer { flex-direction: column; gap: 0.8rem; text-align: center; padding: 2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="nav">
+  <a class="nav-logo" href="#">VS ✦</a>
+  <div class="nav-links">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#ai-tools">AI</a>
+    <a class="nav-cta" href="#contact">Contact</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-divider"></div>
+  <div>
+    <p class="hero-eyebrow">Senior Business Analyst · Phnom Penh</p>
+    <h1>Visal<br /><em>Suos</em></h1>
+    <p class="hero-tagline">7+ years bridging business and technology at Smart Axiata — turning complex requirements into shipped products, with AI as a force multiplier across the full BA lifecycle.</p>
+    <div class="hero-tags">
+      <span class="tag">API Specs</span>
+      <span class="tag">Telecom</span>
+      <span class="tag">Agile / Jira</span>
+      <span class="tag">Prompt Engineering</span>
+      <span class="tag">Android Dev</span>
+    </div>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#portfolio">32 Epics Delivered</a>
+      <a class="btn btn-ghost" href="#contact">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stat-grid">
+      <div class="stat-card"><span class="stat-num">7+</span><span class="stat-label">Years at Smart Axiata</span></div>
+      <div class="stat-card"><span class="stat-num">32</span><span class="stat-label">Product Epics</span></div>
+      <div class="stat-card"><span class="stat-num">19</span><span class="stat-label">Change Requests</span></div>
+      <div class="stat-card"><span class="stat-num">11</span><span class="stat-label">Feasibility Reports</span></div>
+    </div>
+    <div class="location-bar">
+      <div class="live-dot"></div>
+      Available · Phnom Penh, Cambodia
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-header reveal"><span class="sec-num">01 /</span><h2>About</h2></div>
+  <div class="about-grid">
+    <div class="about-body reveal">
+      <p>I'm a <strong>Senior Business Analyst</strong> at Smart Axiata with a rare dual background in Android development and BA practice. That technical foundation means I don't just write requirements — I understand architecture, anticipate integration complexity, and communicate precisely with engineering teams.</p>
+      <p>Over seven years I've owned the full BA lifecycle for <strong>32 product epics</strong> across SmartNas mobile app and Smart Website 2.0 — from feasibility study and API specification through stakeholder sign-off and release. Work spans payment systems, eKYC/face scan, SIM registration, 4G/5G coverage tools, roaming, and Home Internet (5G CPE).</p>
+      <p>I'm also a <strong>self-taught AI practitioner</strong> — using Claude, ChatGPT, Ollama, and Google Veo daily to accelerate documentation, automate analysis, and produce specification-quality outputs. I run local AI (Gemma 4 via Ollama) for offline, private workflows with 256K context and Khmer-language support.</p>
+    </div>
+    <div class="skills-col reveal">
+      <h3>Core Competencies</h3>
+      <ul class="skills-list">
+        <li>Requirements Elicitation</li>
+        <li>API Specification Writing</li>
+        <li>Stakeholder Management</li>
+        <li>Feasibility &amp; Impact Analysis</li>
+        <li>Technical Documentation</li>
+        <li>Agile / Jira / Confluence</li>
+        <li>SDLC Process Improvement</li>
+        <li>AI-Augmented BA Practice</li>
+        <li>Android Dev (Kotlin / Java)</li>
+        <li>DevOps (Jenkins, SonarQube)</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-header reveal"><span class="sec-num">02 /</span><h2>Experience</h2></div>
+  <div class="exp-items">
+    <div class="exp-card reveal">
+      <div>
+        <p class="exp-company">Smart Axiata · Phnom Penh</p>
+        <h3 class="exp-role">Senior Business Analyst</h3>
+        <p class="exp-sub-title">SmartNas Mobile App — 10 Epics</p>
+        <ul class="exp-highlights">
+          <li>Owned requirements, solution design &amp; stakeholder alignment for 10 epics including Home Internet, SmartRoam, TRC Profile Enforcement (eKYC/face scan), Hybrid plans, and Multi-SIM features.</li>
+          <li>Wrote API specs and test cases covering full feature scope: contracts, sequence diagrams, UI/UX flows, edge cases, and UAT criteria — coordinating with PO, developers, QA, and vendors.</li>
+          <li>Managed 19 change requests end-to-end: scope impact analysis, tech spec updates, and delivery timeline realignment.</li>
+        </ul>
+        <p class="exp-sub-title">Smart Website 2.0 — 11 Epics</p>
+        <ul class="exp-highlights">
+          <li>Authored API specs for 10+ platform modules: PayMyBill, ABA ePayment Pre-Auth/Complete Auth, SIM Registration, Get My Number, Top Up, 4G/5G Coverage Checker, Home Internet, HRIS, Device OMS, and Stock Sync microservice.</li>
+          <li>Defined requirements for third-party integrations (ABA Mini App, Live Chat, Nham24) covering API contracts, data flow, error handling, and SLA compliance.</li>
+          <li>Produced 11 Feasibility Study Reports assessing technical viability, system impact, and resource requirements before kick-off.</li>
+          <li>Leveraged AI tools (Claude, ChatGPT) to accelerate spec drafting, requirement refinement, and sequence diagram generation — significantly reducing turnaround time.</li>
+        </ul>
+        <p class="exp-sub-title">Additional</p>
+        <ul class="exp-highlights">
+          <li>Improved team SDLC by introducing DevOps tooling (Jenkins, SonarQube, Nexus) and standardising Jira/Confluence practices.</li>
+          <li>Supported DevOps-Automation team with Xray test management and Cucumber automation framework setup.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="exp-period">Apr 2018 — Present</p>
+        <span class="exp-badge">7+ Years</span>
+      </div>
+    </div>
+
+    <div class="exp-card reveal">
+      <div>
+        <p class="exp-company">GL Finance Cambodia · Nanita Tech · KOSIGN</p>
+        <h3 class="exp-role">Android Developer</h3>
+        <ul class="exp-highlights">
+          <li>Built Android applications across CO App, GL Digital Finance, Collection GO, vShuffle, and BizPlay.</li>
+          <li>Established the technical foundation that underpins current BA practice in API design, mobile architecture review, and developer collaboration.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="exp-period">Jan 2017 — Mar 2018</p>
+        <span class="exp-badge">Android Dev</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="sec-header reveal"><span class="sec-num">03 /</span><h2>Feature Portfolio</h2></div>
+  <p class="portfolio-intro reveal">32 product epics + 19 change requests delivered end-to-end (2023–2025) — requirements, tech spec, stakeholder alignment, and release sign-off.</p>
+  <div class="portfolio-tabs reveal">
+    <div class="ptab active" onclick="switchTab('smartnas')">SmartNas (10)</div>
+    <div class="ptab" onclick="switchTab('website')">Smart Website 2.0 (11)</div>
+    <div class="ptab" onclick="switchTab('fsr')">FSR (11)</div>
+    <div class="ptab" onclick="switchTab('cr')">Change Requests (19)</div>
+  </div>
+
+  <div class="tab-content active" id="tab-smartnas">
+    <div class="portfolio-grid">
+      <div class="portfolio-row"><span class="p-date">Jun 2023</span><span class="p-name">Smart Fiber+ on SmartNas</span><span class="p-badge smartnas">SmartNas</span></div>
+      <div class="portfolio-row"><span class="p-date">Sep 2023</span><span class="p-name">Smart Hybrid &amp; Hybrid+ Split Balance (Postpaid &amp; Prepaid)</span><span class="p-badge smartnas">SmartNas</span></div>
+      <div class="portfolio-row"><span class="p-date">Oct 2023</span><span class="p-name">Home Internet on SmartNas</span><span class="p-badge smartnas">SmartNas</span></div>
+      <div class="portfolio-row"><span class="p-date">Nov 2023</span><span class="p-name">E-Top Up to Win &amp; Lucky Draw Campaign</span><span class="p-badge smartnas">SmartNas</span></div>
+      <div class="portfolio-row"><span class="p-date">Jan 2024</span><span class="p-name">Hybrid User Profile Update Restriction</span><span class="p-badge smartnas">SmartNas</span></div>
+      <div class="portfolio-row"><span class="p-date">Feb 2024</span><span class="p-name">Profile Registration — Eligibility Amendment &amp; Logic Update</span><span class="p-badge smartnas">SmartNas</span></div>
+      <div class="portfolio-row"><span class="p-date">Mar 2024</span><span class="p-name">Top Up from Postpaid to Prepaid &amp; Home Internet</span><span class="p-badge smartnas">SmartNas</span></div>
+      <div class="portfolio-row"><span class="p-date">Apr 2024</span><span class="p-name">SmartRoam Activation &amp; Deactivation</span><span class="p-badge smartnas">SmartNas</span></div>
+      <div class="portfolio-row"><span class="p-date">May 2024</span><span class="p-name">TRC Profile Enforcement — Face Scan / eKYC for Profile Update</span><span class="p-badge smartnas">SmartNas</span></div>
+      <div class="portfolio-row"><span class="p-date">Dec 2024</span><span class="p-name">Home Internet Cap Top Up Enhancement (Smart@Home &amp; Prepaid Local)</span><span class="p-badge smartnas">SmartNas</span></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-website">
+    <div class="portfolio-grid">
+      <div class="portfolio-row"><span class="p-date">Dec 2023</span><span class="p-name">Shop Finder Integration</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">Dec 2023</span><span class="p-name">Network Coverage Checker</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">Feb 2024</span><span class="p-name">SIM Registration</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">Apr 2024</span><span class="p-name">Transactional NPS (tNPS)</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">Apr 2024</span><span class="p-name">Get My Number</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">Apr 2024</span><span class="p-name">Device E-Commerce</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">Apr 2024</span><span class="p-name">Pay My Bill</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">Nov 2024</span><span class="p-name">Activate SIM KIT</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">Nov 2024</span><span class="p-name">ABA ePayment API — Pre-Auth, Complete Auth &amp; Cancel Auth</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">May 2025</span><span class="p-name">Sync Stock: Device Commerce (ETL Microservice)</span><span class="p-badge website">Website</span></div>
+      <div class="portfolio-row"><span class="p-date">Sep 2025</span><span class="p-name">Home Internet Top Up</span><span class="p-badge website">Website</span></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-fsr">
+    <div class="portfolio-grid">
+      <div class="portfolio-row"><span class="p-date">Jun 2023</span><span class="p-name">Spin The Wheel Gamification Feature</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Aug 2023</span><span class="p-name">Smart Hybrid &amp; Hybrid+ Plans</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Sep 2023</span><span class="p-name">SmartTunes Pre-listening Feature</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Sep 2023</span><span class="p-name">Home Internet on SmartNas</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Oct 2023</span><span class="p-name">Network Coverage Checker — Smart Website 2.0</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Dec 2023</span><span class="p-name">Transactional NPS — Smart Website 2.0</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Dec 2023</span><span class="p-name">Pay My Bill — Smart Website 2.0</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Jan 2024</span><span class="p-name">SIM Registration — Smart Website 2.0</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Feb 2024</span><span class="p-name">Top Up from Postpaid to Prepaid &amp; Home Internet</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Apr 2024</span><span class="p-name">SmartRoam Activation — Feasibility &amp; Requirement Study</span><span class="p-badge fsr">FSR</span></div>
+      <div class="portfolio-row"><span class="p-date">Jun 2024</span><span class="p-name">Onboarding Referrals on SmartNas</span><span class="p-badge fsr">FSR</span></div>
+    </div>
+  </div>
+
+  <div class="tab-content" id="tab-cr">
+    <div class="portfolio-grid">
+      <div class="portfolio-row"><span class="p-date">May 2023</span><span class="p-name">eSIM Purchase — New Logic Implementation &amp; Tech Spec Update</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Jun 2023</span><span class="p-name">Backend SmartNas — Mapping Name for Extra Add-on</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Aug 2023</span><span class="p-name">Non-Smart User — UX/UI Skeleton Implementation</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Sep 2023</span><span class="p-name">Smart Fiber+ After Sales Status</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Sep 2023</span><span class="p-name">Account Details — SmartLoan Section Content Revision &amp; Hide Logic</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Nov 2023</span><span class="p-name">Home Internet — Fiber+ New Tariff Plan &amp; Speed Revamp</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Nov 2023</span><span class="p-name">Skeleton Loading on More Page — Tech Spec Update</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Jan 2024</span><span class="p-name">Profile Update Restriction for Hybrid Users — Tech Spec Update</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">May 2024</span><span class="p-name">SIM Registration — Endpoint Change for Profile Status</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">May 2024</span><span class="p-name">tNPS — Feasibility Study Report (CR)</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Aug 2024</span><span class="p-name">eKYC — Accept ID Expiring Within 6 Months (All Platforms)</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Sep 2024</span><span class="p-name">Implement Huawei SDK in SmartNas</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Jan 2025</span><span class="p-name">Top Up to WIN 2025 — Phase 2</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Jan 2025</span><span class="p-name">Smart@Home eKYC — Tech Spec Update</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Jan 2025</span><span class="p-name">Microservice Flow Revision After Payment Completion</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Apr 2025</span><span class="p-name">SIM Registration — Expired ID &amp; Limitation Condition Logic</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">May 2025</span><span class="p-name">SIM Registration — Hide Text Update</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Aug 2025</span><span class="p-name">Smart@Home — Handling Old and New CPE QR Code Types</span><span class="p-badge cr">CR</span></div>
+      <div class="portfolio-row"><span class="p-date">Dec 2025</span><span class="p-name">Mobile Bundle Benefit — Phase 1</span><span class="p-badge cr">CR</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI TOOLS -->
+<section id="ai-tools">
+  <div class="sec-header reveal"><span class="sec-num">04 /</span><h2>AI Practice</h2></div>
+  <div class="ai-grid">
+    <div class="ai-card reveal">
+      <div class="ai-icon">🤖</div>
+      <p class="ai-name">Large Language Models</p>
+      <p class="ai-desc">Claude (Sonnet &amp; Opus), ChatGPT — daily tools for drafting tech specs, refining requirements, generating user stories, and accelerating BA deliverables at scale.</p>
+    </div>
+    <div class="ai-card reveal">
+      <div class="ai-icon">✍️</div>
+      <p class="ai-name">Prompt Engineering</p>
+      <p class="ai-desc">Designs and owns custom prompts — not a passive AI user. Crafts structured prompts to produce sequence diagrams, API specs, flowcharts, and acceptance criteria with consistent, reviewable output.</p>
+    </div>
+    <div class="ai-card reveal">
+      <div class="ai-icon">🖥️</div>
+      <p class="ai-name">Local AI — Ollama &amp; Gemma 4</p>
+      <p class="ai-desc">Self-hosted Gemma 4 via Ollama — fully offline, private AI with 256K token context, multimodal input, Khmer-language support, and agentic function calling for local automation workflows.</p>
+    </div>
+    <div class="ai-card reveal">
+      <div class="ai-icon">🎬</div>
+      <p class="ai-name">AI Video Generation</p>
+      <p class="ai-desc">Google Veo 3.1 (via Gemini), Grok — produces AI-generated video from text prompts using cinematic prompt structuring for controlled, scene-accurate output.</p>
+    </div>
+    <div class="ai-card reveal">
+      <div class="ai-icon">🎨</div>
+      <p class="ai-name">AI Image &amp; UI Design</p>
+      <p class="ai-desc">ChatGPT (DALL·E), Google Gemini, Google Stitch — generates UI mockups, architecture visuals, wireframe concepts, and illustrative diagrams to support BA documentation and presentations.</p>
+    </div>
+    <div class="ai-card reveal">
+      <div class="ai-icon">📊</div>
+      <p class="ai-name">AI-Powered Office Tools</p>
+      <p class="ai-desc">Claude &amp; ChatGPT plugins in Microsoft Excel and PowerPoint — automates data analysis, generates report summaries, and produces formatted outputs without manual rework.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="sec-header reveal"><span class="sec-num">05 /</span><h2>Contact</h2></div>
+  <div class="contact-grid">
+    <div class="reveal">
+      <h3 class="contact-heading">Let's work<br /><em>together.</em></h3>
+      <p class="contact-sub">Open to Senior BA opportunities, consulting engagements, and collaborations in telecom, fintech, or AI-augmented product delivery.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a class="contact-link" href="mailto:visal012896@gmail.com">
+        <span class="contact-link-label"><span>Email</span> visal012896@gmail.com</span>
+        <span class="contact-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="tel:+85510499805">
+        <span class="contact-link-label"><span>Phone</span> (855) 10 499 805</span>
+        <span class="contact-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="https://linkedin.com/in/visal-suos" target="_blank" rel="noopener">
+        <span class="contact-link-label"><span>LinkedIn</span> Visal SUOS</span>
+        <span class="contact-arrow">↗</span>
+      </a>
+      <a class="contact-link" href="#">
+        <span class="contact-link-label"><span>Location</span> Phnom Penh, Cambodia</span>
+        <span class="contact-arrow">↗</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="footer-copy">© 2025 Visal Suos · Hosted on GitHub Pages</p>
+  <p class="footer-quote">"Directing AI, not following it."</p>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 60));
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  function switchTab(id) {
+    document.querySelectorAll('.ptab').forEach((t, i) => t.classList.toggle('active', ['smartnas','website','fsr','cr'][i] === id));
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.toggle('active', c.id === 'tab-' + id));
+  }
+</script>
+</body>
+</html>
